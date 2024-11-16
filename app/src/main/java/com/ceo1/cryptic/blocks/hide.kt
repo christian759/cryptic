@@ -101,8 +101,7 @@ fun hide(){
 
             Spacer(modifier = Modifier.padding(2.dp).weight(0.1f))
 
-            imageUri2?.let {
-                    uri2 -> val painter2 = rememberAsyncImagePainter( model = ImageRequest.Builder(context2).data(uri2).build() )
+            imageUri2?.let { uri2 -> val painter2 = rememberAsyncImagePainter( model = ImageRequest.Builder(context2).data(uri2).build() )
                 Image( painter = painter2, contentDescription = "Selected Image", modifier = Modifier
                     .fillMaxHeight()
                     .weight(0.3f))
@@ -111,7 +110,13 @@ fun hide(){
         }
     }
 
-    Button(onClick = {}){
-        Text("Hide Image")
+    Button(border = BorderStroke(1.dp, Color.White),
+        shape = RoundedCornerShape(12.dp),
+        modifier = Modifier
+            .padding(25.dp),
+        onClick = {
+
+        }){
+        Text("Hide Image", fontSize = TextUnit(18f, TextUnitType.Sp))
     }
 }
