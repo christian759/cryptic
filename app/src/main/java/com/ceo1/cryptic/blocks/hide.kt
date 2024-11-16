@@ -3,14 +3,13 @@ package com.ceo1.cryptic.blocks
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material3.*
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,67 +32,86 @@ fun hide(){
             uri: Uri? -> imageUri = uri
     }
 
-    Card(colors = CardColors(White, White, White, White),
-        modifier = Modifier.padding(vertical = 20.dp, horizontal = 10.dp)) {
-        Text("Upload your Cover image",
-            color = Black,
-            fontSize = TextUnit(20f, TextUnitType.Sp),
-            modifier = Modifier.padding(12.dp)
-        )
+    var imageUri2 by remember { mutableStateOf<Uri?>(null) }
 
-        Button(modifier = Modifier.padding(5.dp),
-            border = BorderStroke(3.dp, Color.White),
-            shape = RoundedCornerShape(10.dp),
-            colors = ButtonColors(Color.White, DarkPurple, Black, Black),
-            onClick = {
-                launcher.launch("image/*")
-            }
+    val context2 = LocalContext.current
 
-        ){
-            Row{
-                Text("Select your image", modifier = Modifier.padding(2.dp))
-                Icon(imageVector = Icons.Default.AccountBox, "upload image", modifier = Modifier.padding(2.dp))
-            }
-        }
-
-        imageUri?.let {
-                uri -> val painter = rememberAsyncImagePainter( model = ImageRequest.Builder(context).data(uri).build() )
-            Image( painter = painter, contentDescription = "Selected Image", modifier = Modifier.size(300.dp).padding(16.dp) )
-        }
-
+    val launcher2 = rememberLauncherForActivityResult( contract = ActivityResultContracts.GetContent() ) {
+            uri: Uri? -> imageUri2 = uri
     }
 
-    Spacer(modifier = Modifier.padding(60.dp))
+    Spacer(modifier = Modifier.padding(10.dp))
+
+    Text("Hide Image", color = Color.White, fontSize = TextUnit(30f, TextUnitType.Sp),
+        modifier = Modifier.padding(10.dp))
+
+    Text("Select a cover image", color = Color.White, fontSize = TextUnit(18f, TextUnitType.Sp),
+        modifier = Modifier.padding(10.dp))
 
     Card(colors = CardColors(White, White, White, White),
-        modifier = Modifier.padding(vertical = 20.dp, horizontal = 10.dp)) {
-        Text("Upload the image you wish to hide")
-        Button(modifier = Modifier.fillMaxWidth(),
-            onClick = {
-                // do nothing
-            }
-        ){
-            Row{
-                Text("Select image")
-            }
-        }
+        modifier = Modifier.padding(horizontal = 10.dp).height(70.dp)) {
 
+        Row(modifier = Modifier.padding(3.dp)) {
+            Button(border = BorderStroke(1.dp, Color.White),
+                shape = RoundedCornerShape(12.dp),
+                modifier = Modifier
+                    .weight(0.5f)
+                    .padding(5.dp)
+                    .fillMaxHeight(),
+                onClick = {
+                    launcher.launch("image/*")
+                }
+            ) {
+                Text("Pick an image", fontSize = TextUnit(18f, TextUnitType.Sp))
+            }
+
+            Spacer(modifier = Modifier.padding(2.dp).weight(0.1f))
+
+            imageUri?.let {
+                    uri -> val painter = rememberAsyncImagePainter( model = ImageRequest.Builder(context).data(uri).build() )
+                Image( painter = painter, contentDescription = "Selected Image", modifier = Modifier
+                    .fillMaxHeight()
+                    .weight(0.3f))
+            }
+
+        }
     }
 
-    Text("Note: only images and text that have been hidden by this app can be extracted",
-        color = Black)
+    Spacer(modifier = Modifier.padding(17.dp))
 
-    Column( modifier = Modifier.fillMaxSize().padding(16.dp) )
-    {
-        Button(onClick = {
-            launcher.launch("image/*")
-        })
-        {
-            Text("Select Image")
+    Text("Select an image to hide", color = Color.White, fontSize = TextUnit(18f, TextUnitType.Sp),
+        modifier = Modifier.padding(10.dp))
+
+    Card(colors = CardColors(White, White, White, White),
+        modifier = Modifier.padding(horizontal = 10.dp).height(70.dp)) {
+
+        Row(modifier = Modifier.padding(3.dp)) {
+            Button(border = BorderStroke(1.dp, Color.White),
+                shape = RoundedCornerShape(12.dp),
+                modifier = Modifier
+                    .weight(0.5f)
+                    .padding(5.dp)
+                    .fillMaxHeight(),
+                onClick = {
+                    launcher2.launch("image/*")
+                }
+            ) {
+                Text("Pick an image", fontSize = TextUnit(18f, TextUnitType.Sp))
+            }
+
+            Spacer(modifier = Modifier.padding(2.dp).weight(0.1f))
+
+            imageUri2?.let {
+                    uri2 -> val painter2 = rememberAsyncImagePainter( model = ImageRequest.Builder(context2).data(uri2).build() )
+                Image( painter = painter2, contentDescription = "Selected Image", modifier = Modifier
+                    .fillMaxHeight()
+                    .weight(0.3f))
+            }
+
         }
+    }
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-
+    Button(onClick = {}){
+        Text("Hide Image")
     }
 }
