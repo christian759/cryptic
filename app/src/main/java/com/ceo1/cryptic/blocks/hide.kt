@@ -17,6 +17,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.ceo1.cryptic.ui.theme.*
@@ -24,27 +25,35 @@ import com.ceo1.cryptic.ui.theme.*
 @Composable
 fun hide(){
 
+    // first image info
     var imageUri by remember { mutableStateOf<Uri?>(null) }
-
     val context = LocalContext.current
-
     val launcher = rememberLauncherForActivityResult( contract = ActivityResultContracts.GetContent() ) {
             uri: Uri? -> imageUri = uri
     }
+    // same value of painter1
+    // value going to be used for operation
+    var refPainter1: AsyncImagePainter
 
+
+    // second image info
     var imageUri2 by remember { mutableStateOf<Uri?>(null) }
-
     val context2 = LocalContext.current
-
     val launcher2 = rememberLauncherForActivityResult( contract = ActivityResultContracts.GetContent() ) {
             uri: Uri? -> imageUri2 = uri
     }
+    // same value of painter2
+    // value going to be used for operation
+    var refPainter2: AsyncImagePainter
+
 
     Spacer(modifier = Modifier.padding(10.dp))
 
     Text("Hide Image", color = Color.White, fontSize = TextUnit(30f, TextUnitType.Sp),
         modifier = Modifier.padding(10.dp))
 
+
+    // first card for cover image
     Text("Select a cover image", color = Color.White, fontSize = TextUnit(18f, TextUnitType.Sp),
         modifier = Modifier.padding(10.dp))
 
@@ -68,7 +77,7 @@ fun hide(){
             Spacer(modifier = Modifier.padding(2.dp).weight(0.1f))
 
             imageUri?.let {
-                    uri -> val painter = rememberAsyncImagePainter( model = ImageRequest.Builder(context).data(uri).build() )
+                    uri -> val painter = rememberAsyncImagePainter( model = ImageRequest.Builder(context).data(uri).build())
                 Image( painter = painter, contentDescription = "Selected Image", modifier = Modifier
                     .fillMaxHeight()
                     .weight(0.3f))
@@ -79,6 +88,8 @@ fun hide(){
 
     Spacer(modifier = Modifier.padding(17.dp))
 
+
+    // second image card, image to hide
     Text("Select an image to hide", color = Color.White, fontSize = TextUnit(18f, TextUnitType.Sp),
         modifier = Modifier.padding(10.dp))
 
@@ -101,7 +112,9 @@ fun hide(){
 
             Spacer(modifier = Modifier.padding(2.dp).weight(0.1f))
 
-            imageUri2?.let { uri2 -> val painter2 = rememberAsyncImagePainter( model = ImageRequest.Builder(context2).data(uri2).build() )
+            imageUri2?.let {
+                uri2 -> val painter2 = rememberAsyncImagePainter( model = ImageRequest.Builder(context2).data(uri2).build() )
+                refPainter2 = painter2
                 Image( painter = painter2, contentDescription = "Selected Image", modifier = Modifier
                     .fillMaxHeight()
                     .weight(0.3f))
@@ -110,6 +123,8 @@ fun hide(){
         }
     }
 
+
+    // button for hiding
     Button(border = BorderStroke(1.dp, Color.White),
         shape = RoundedCornerShape(12.dp),
         modifier = Modifier
