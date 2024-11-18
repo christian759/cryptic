@@ -12,7 +12,7 @@ import java.nio.ByteBuffer
 import java.nio.file.Files
 
 @RequiresApi(Build.VERSION_CODES.O)
-fun embedFileInImage(imagePath: String, filePath: String, outputImagePath: String) {
+fun embedFileInImage(imagePath: String, filePath: String, outputImagePath: String?) {
     val imageFile = File(imagePath)
     val fileToEmbed = File(filePath)
 
@@ -27,7 +27,9 @@ fun embedFileInImage(imagePath: String, filePath: String, outputImagePath: Strin
     // Combine image data, file data, and file size at the end
     val combinedData = imageData + fileData + fileSizeBytes
 
-    File(outputImagePath).writeBytes(combinedData)
+    if (outputImagePath != null) {
+        File(outputImagePath).writeBytes(combinedData)
+    }
     println("File embedded in image successfully with file size info!")
 }
 

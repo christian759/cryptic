@@ -1,27 +1,28 @@
 package com.ceo1.cryptic.blocks
 
+import android.annotation.SuppressLint
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material3.*
-import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
+import com.ceo1.cryptic.embedFileInImage
 import com.ceo1.cryptic.ui.theme.*
 
+@SuppressLint("NewApi")
 @Composable
 fun hide(){
 
@@ -49,15 +50,15 @@ fun hide(){
 
     Spacer(modifier = Modifier.padding(10.dp))
 
-    Text("Hide Image", color = Color.White, fontSize = TextUnit(30f, TextUnitType.Sp),
+    Text("Hide Image", color = White, fontSize = TextUnit(30f, TextUnitType.Sp), fontWeight = FontWeight.Bold,
         modifier = Modifier.padding(10.dp))
 
 
     // first card for cover image
-    Text("Select a cover image", color = Color.White, fontSize = TextUnit(18f, TextUnitType.Sp),
+    Text("Select a cover image", color = White, fontSize = TextUnit(18f, TextUnitType.Sp),
         modifier = Modifier.padding(10.dp))
 
-    Card(colors = CardColors(White, White, White, White),
+    Card(colors = CardColors(White2, White2, White2, White2),
         modifier = Modifier.padding(horizontal = 10.dp).height(70.dp)) {
 
         Row(modifier = Modifier.padding(3.dp)) {
@@ -90,10 +91,10 @@ fun hide(){
 
 
     // second image card, image to hide
-    Text("Select an image to hide", color = Color.White, fontSize = TextUnit(18f, TextUnitType.Sp),
+    Text("Select an image to hide", color = White, fontSize = TextUnit(18f, TextUnitType.Sp),
         modifier = Modifier.padding(10.dp))
 
-    Card(colors = CardColors(White, White, White, White),
+    Card(colors = CardColors(White2, White2, White2, White2),
         modifier = Modifier.padding(horizontal = 10.dp).height(70.dp)) {
 
         Row(modifier = Modifier.padding(3.dp)) {
@@ -130,7 +131,12 @@ fun hide(){
         modifier = Modifier
             .padding(25.dp),
         onClick = {
-
+       /*     
+       Error, to be fixed ....
+       if (imageUri2 != null) {
+                embedFileInImage(imageUri.toString(), imageUri2.toString(), "image/love.png")
+            }
+        */
         }){
         Text("Hide Image", fontSize = TextUnit(18f, TextUnitType.Sp))
     }
