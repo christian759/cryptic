@@ -1,21 +1,22 @@
 package com.ceo1.cryptic
 
+import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
+import android.os.Environment
+import android.provider.MediaStore
 import androidx.annotation.RequiresApi
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.nio.ByteBuffer
 
 @RequiresApi(Build.VERSION_CODES.O)
-fun embedImageInImageAndroid(context: Context, coverImageUri: Uri?, hiddenImageUri: Uri?, outputFileName: String) {
-
+fun embedImageInImageAndroid(context: Context, coverImageUri: Uri?, hiddenImageUri: Uri?, outputFileName: String): Uri? {
     val coverImage = BitmapFactory.decodeStream(coverImageUri?.let { context.contentResolver.openInputStream(it) })
     val hiddenImage = BitmapFactory.decodeStream(hiddenImageUri?.let { context.contentResolver.openInputStream(it) })
-
 
     // Convert the hidden image to byte array
     val byteArrayOutputStream = ByteArrayOutputStream()
@@ -29,12 +30,25 @@ fun embedImageInImageAndroid(context: Context, coverImageUri: Uri?, hiddenImageU
     combinedData.write(hiddenImageBytes)
     combinedData.write(hiddenImageSizeBytes)
 
-    // Save combined data to a file
-    val outputDir = context.getExternalFilesDir(null) // App's external files directory
-    val outputFile = File(outputDir, outputFileName)
-    outputFile.writeBytes(combinedData.toByteArray())
-    println("Hidden image embedded successfully in: ${outputFile.absolutePath}")
+    // Save combined data to a file and get the Uri
+    val resolver = context.contentResolver
+    val contentValues = ContentValues().apply {
+        put(MediaStore.MediaColumns.DISPLAY_NAME, outputFileName)
+        put(MediaStore.MediaColumns.MIME_TYPE, "image/png")
+        put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
+    }
+    val uri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+
+    uri?.let {
+        resolver.openOutputStream(it).use { outputStream ->
+            outputStream?.write(combinedData.toByteArray())
+        }
+        println("Hidden image embedded successfully in: $it")
+    }
+
+    return uri
 }
+
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun extractImageFromImageAndroid(context: Context, embeddedImageUri: Uri, outputFileName: String) {

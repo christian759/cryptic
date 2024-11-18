@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
+import coil.request.CachePolicy
 import coil.request.ImageRequest
 import com.ceo1.cryptic.embedImageInImageAndroid
 import com.ceo1.cryptic.ui.theme.*
@@ -103,6 +104,7 @@ fun hide(){
                     .padding(5.dp)
                     .fillMaxHeight(),
                 onClick = {
+                    println("done")
                     launcher2.launch("image/*")
                 }
             ) {
@@ -112,7 +114,13 @@ fun hide(){
             Spacer(modifier = Modifier.padding(2.dp).weight(0.1f))
 
             imageUri2?.let {
-                uri2 -> val painter2 = rememberAsyncImagePainter( model = ImageRequest.Builder(context).data(uri2).build() )
+                uri2 -> val painter2 = rememberAsyncImagePainter( model = ImageRequest
+                    .Builder(context)
+                    .data(uri2)
+                    .diskCachePolicy(CachePolicy.ENABLED)
+                    .memoryCachePolicy(CachePolicy.ENABLED)
+                    .build()
+                )
                 refPainter2 = painter2
                 Image( painter = painter2, contentDescription = "Selected Image", modifier = Modifier
                     .fillMaxHeight()
