@@ -2,6 +2,7 @@ package com.ceo1.cryptic.blocks
 
 import android.annotation.SuppressLint
 import android.net.Uri
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.*
@@ -19,16 +20,15 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-import com.ceo1.cryptic.embedFileInImage
+import com.ceo1.cryptic.embedImageInImageAndroid
 import com.ceo1.cryptic.ui.theme.*
 
 @SuppressLint("NewApi")
 @Composable
 fun hide(){
-
+    val context = LocalContext.current
     // first image info
     var imageUri by remember { mutableStateOf<Uri?>(null) }
-    val context = LocalContext.current
     val launcher = rememberLauncherForActivityResult( contract = ActivityResultContracts.GetContent() ) {
             uri: Uri? -> imageUri = uri
     }
@@ -39,14 +39,12 @@ fun hide(){
 
     // second image info
     var imageUri2 by remember { mutableStateOf<Uri?>(null) }
-    val context2 = LocalContext.current
     val launcher2 = rememberLauncherForActivityResult( contract = ActivityResultContracts.GetContent() ) {
             uri: Uri? -> imageUri2 = uri
     }
     // same value of painter2
     // value going to be used for operation
     var refPainter2: AsyncImagePainter
-
 
     Spacer(modifier = Modifier.padding(10.dp))
 
@@ -114,7 +112,7 @@ fun hide(){
             Spacer(modifier = Modifier.padding(2.dp).weight(0.1f))
 
             imageUri2?.let {
-                uri2 -> val painter2 = rememberAsyncImagePainter( model = ImageRequest.Builder(context2).data(uri2).build() )
+                uri2 -> val painter2 = rememberAsyncImagePainter( model = ImageRequest.Builder(context).data(uri2).build() )
                 refPainter2 = painter2
                 Image( painter = painter2, contentDescription = "Selected Image", modifier = Modifier
                     .fillMaxHeight()
@@ -131,12 +129,12 @@ fun hide(){
         modifier = Modifier
             .padding(25.dp),
         onClick = {
-       /*     
-       Error, to be fixed ....
-       if (imageUri2 != null) {
-                embedFileInImage(imageUri.toString(), imageUri2.toString(), "image/love.png")
-            }
-        */
+
+       if ((imageUri != null) and (imageUri2 != null)) {
+           embedImageInImageAndroid(context = context, coverImageUri = imageUri, hiddenImageUri = imageUri2, "embedded_image.png")
+       }else{
+           Toast.makeText(context, "Please select both image", Toast.LENGTH_LONG).show()
+       }
         }){
         Text("Hide Image", fontSize = TextUnit(18f, TextUnitType.Sp))
     }
