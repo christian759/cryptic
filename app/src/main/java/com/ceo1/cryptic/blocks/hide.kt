@@ -2,9 +2,11 @@ package com.ceo1.cryptic.blocks
 
 import android.annotation.SuppressLint
 import android.net.Uri
+import android.os.Build
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -17,35 +19,28 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.CachePolicy
 import coil.request.ImageRequest
 import com.ceo1.cryptic.embedImageInImageAndroid
 import com.ceo1.cryptic.ui.theme.*
 
-@SuppressLint("NewApi")
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun hide(){
     val context = LocalContext.current
+
     // first image info
     var imageUri by remember { mutableStateOf<Uri?>(null) }
     val launcher = rememberLauncherForActivityResult( contract = ActivityResultContracts.GetContent() ) {
             uri: Uri? -> imageUri = uri
     }
-    // same value of painter1
-    // value going to be used for operation
-    var refPainter1: AsyncImagePainter
-
 
     // second image info
     var imageUri2 by remember { mutableStateOf<Uri?>(null) }
     val launcher2 = rememberLauncherForActivityResult( contract = ActivityResultContracts.GetContent() ) {
             uri: Uri? -> imageUri2 = uri
     }
-    // same value of painter2
-    // value going to be used for operation
-    var refPainter2: AsyncImagePainter
 
     Spacer(modifier = Modifier.padding(10.dp))
 
@@ -82,7 +77,6 @@ fun hide(){
                     .fillMaxHeight()
                     .weight(0.3f))
             }
-
         }
     }
 
@@ -121,12 +115,10 @@ fun hide(){
                     .memoryCachePolicy(CachePolicy.ENABLED)
                     .build()
                 )
-                refPainter2 = painter2
                 Image( painter = painter2, contentDescription = "Selected Image", modifier = Modifier
                     .fillMaxHeight()
                     .weight(0.3f))
             }
-
         }
     }
 
