@@ -15,7 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.*
-import androidx.compose.ui.window.Popup
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.ceo1.cryptic.extractImageFromImageAndroid
