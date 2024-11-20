@@ -15,15 +15,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.*
-import androidx.compose.ui.window.Popup
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
+import com.ceo1.cryptic.Theme
 import com.ceo1.cryptic.extractImageFromImageAndroid
 import com.ceo1.cryptic.ui.theme.*
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun extract(){
+fun extract(primaryTheme: Theme){
     var showDialog by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
