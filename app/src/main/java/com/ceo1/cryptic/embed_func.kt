@@ -51,22 +51,18 @@ fun embedImageInImageAndroid(context: Context, coverImageUri: Uri?, hiddenImageU
 
 
 @RequiresApi(Build.VERSION_CODES.O)
-fun extractImageFromImageAndroid(context: Context, embeddedImageUri: Uri, outputFileName: String) {
-    val embeddedImageData = context.contentResolver.openInputStream(embeddedImageUri)?.readBytes()
-
-    if (embeddedImageData == null) {
+fun extractImageFromImageAndroid(context: Context, embeddedImageUri: Uri?, outputFileName: String) {
+    val inputStream = embeddedImageUri?.let { context.contentResolver.openInputStream(it) } ?: run {
         println("Error: Could not read embedded image data.")
         return
     }
 
+    val embeddedImageData = inputStream.readBytes()
+    inputStream.close()
+
     // Read the last 8 bytes to get the size of the hidden image
     val hiddenImageSizeBytes = embeddedImageData.copyOfRange(embeddedImageData.size - 8, embeddedImageData.size)
     val hiddenImageSize = ByteBuffer.wrap(hiddenImageSizeBytes).long
-
-    if (hiddenImageSize <= 0 || hiddenImageSize > embeddedImageData.size - 8) {
-        println("Error: Invalid size for the hidden image.")
-        return
-    }
 
     // Extract the hidden image bytes
     val hiddenImageBytes = embeddedImageData.copyOfRange(
@@ -74,9 +70,19 @@ fun extractImageFromImageAndroid(context: Context, embeddedImageUri: Uri, output
         embeddedImageData.size - 8
     )
 
-    // Save the extracted hidden image to a file
-    val outputDir = context.getExternalFilesDir(null) // App's external files directory
-    val outputFile = File(outputDir, outputFileName)
-    outputFile.writeBytes(hiddenImageBytes)
-    println("Hidden image extracted and saved successfully in: ${outputFile.absolutePath}")
+    // Save the extracted hidden image to a file and get the Uri
+    val resolver = context.contentResolver
+    val contentValues = ContentValues().apply {
+        put(MediaStore.MediaColumns.DISPLAY_NAME, outputFileName)
+        put(MediaStore.MediaColumns.MIME_TYPE, "image/png")
+        put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
+    }
+    val uri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+
+    uri?.let {
+        resolver.openOutputStream(it).use { outputStream ->
+            outputStream?.write(hiddenImageBytes)
+        }
+        println("Hidden image extracted and saved successfully in: $uri")
+    }
 }
