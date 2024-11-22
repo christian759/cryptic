@@ -13,5 +13,5 @@ val Light2: Color = Color(175, 176, 186)
 val Light3: Color = Color(8, 8, 8)
 
 val Dark1: Color = Color(8, 8, 8)
-val Dark2: Color = Color(30, 30, 30)
+val Dark2: Color = Color(34, 34, 34)
 val Dark3: Color = Color(225, 235, 236)

@@ -37,7 +37,7 @@ fun extract(primaryTheme: Theme){
     Spacer(modifier = Modifier.padding(20.dp))
     Text("Extract Image")
 
-    Card(colors = CardColors(White2, White2, White2, White2),
+    Card(colors = CardColors(Color.White, Color.White, Color.White, Color.White),
         modifier = Modifier.padding(horizontal = 10.dp).height(70.dp)){
 
         Row(modifier = Modifier.padding(3.dp)){
@@ -99,6 +99,6 @@ fun extract(primaryTheme: Theme){
 
 
     Text("Note: only images and text that have been hidden by this app can be extracted",
-        color = Black)
+        color = Color.Black)
 
 }

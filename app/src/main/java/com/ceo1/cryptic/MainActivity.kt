@@ -6,14 +6,19 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import com.ceo1.cryptic.blocks.hide
 import com.ceo1.cryptic.blocks.extract
@@ -33,7 +38,6 @@ class MainActivity : ComponentActivity() {
 }
 
 data class Theme(val color1: Color, val color2: Color, val color3: Color)
-
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -60,56 +64,77 @@ fun Master() {
     // welcome page(inner function)
     @Composable
     fun Welcome(primaryTheme: Theme){
-        Text("Welcome to Cryptic")
+        Column {
+            Text(
+                "Welcome to Cryptic",
+                fontSize = TextUnit(6F, TextUnitType.Em),
+                fontWeight = FontWeight.Bold,
+                color = primaryTheme.color3,
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+                    .padding(10.dp)
+            )
 
-        Button(onClick = {
-            page += 1
-        }){
-            Row{
-                val painter1 = painterResource(R.drawable.whatsapp_image_2024_11_21_at_02_00_14_6cdcf836)
-                Image(painter = painter1, contentDescription = "encrypt", modifier = Modifier.size(100.dp))
-                Column{
-                    Text("Hide Images", color = primaryTheme.color1)
-                    Text("hide secret images within other image", color = primaryTheme.color1)
-                }
+            Card(
+                border = BorderStroke(width = 4.dp, color = primaryTheme.color2),
+                modifier = Modifier.fillMaxWidth().padding(10.dp).height(80.dp),
+                colors = CardColors(
+                    containerColor = primaryTheme.color3,
+                    contentColor = primaryTheme.color2,
+
+                    disabledContainerColor = Color.Unspecified,
+                    disabledContentColor = Color.Unspecified),
+                onClick = {
+                page += 1
+            }) {
+                Text("Hide Images",
+                    fontSize = TextUnit(4F, TextUnitType.Em),
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(7.dp))
+                Text("Hide secret images within other image", fontSize = TextUnit(3F, TextUnitType.Em),
+                    modifier = Modifier.padding(7.dp))
             }
-        }
 
-        Button(onClick = {
-            page += 2
-        }){
-            Row {
-                val painter2 = painterResource(R.drawable.whatsapp_image_2024_11_21_at_02_00_14_ccd28281)
-                Image(painter = painter2, contentDescription = "decrypt", modifier = Modifier.size(100.dp))
+            Card(
+                border = BorderStroke(width = 4.dp, color = primaryTheme.color2),
+                modifier = Modifier.fillMaxWidth().padding(10.dp).height(80.dp),
+                colors = CardColors(
+                    containerColor = primaryTheme.color3,
+                    contentColor = primaryTheme.color2,
 
-                Column {
-                    Text("Extract Image", color = primaryTheme.color1)
-                    Text("unveil secret images that are hidden", color= primaryTheme.color1)
-                }
+                    disabledContainerColor = Color.Unspecified,
+                    disabledContentColor = Color.Unspecified),
+                onClick = {
+                page += 2
+            }) {
+                Text("Extract Image", fontSize = TextUnit(4F, TextUnitType.Em), fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(7.dp))
+                Text("Unveil secret images that are hidden", fontSize = TextUnit(3F, TextUnitType.Em),
+                    modifier = Modifier.padding(7.dp))
             }
-        }
 
+        }
     }
 
-    Column(modifier = Modifier.background(color = primaryTheme.color2)
+    Column(modifier = Modifier.background(color = primaryTheme.color1)
                             .fillMaxSize()) {
-        Spacer(modifier = Modifier.padding(10.dp))
+        Spacer(modifier = Modifier.padding(15.dp))
 
-        Column(modifier = Modifier.weight(9f)) {
+        Column {
 
-            Switch(checked = colorTheme,
+            Switch(modifier = Modifier.align(Alignment.End),
+                checked = colorTheme,
                 onCheckedChange = {
                     colorTheme = if(colorTheme){false}else{true}
                 },
                 colors = SwitchColors(
                     checkedThumbColor = primaryTheme.color2,
-                    checkedTrackColor = primaryTheme.color1,
+                    checkedTrackColor = primaryTheme.color3,
                     checkedBorderColor = primaryTheme.color2,
-                    checkedIconColor = primaryTheme.color1,
-                    uncheckedThumbColor = primaryTheme.color1,
-                    uncheckedTrackColor = primaryTheme.color2,
-                    uncheckedBorderColor = primaryTheme.color1,
-                    uncheckedIconColor = primaryTheme.color2,
+                    checkedIconColor = primaryTheme.color3,
+                    uncheckedThumbColor = primaryTheme.color2,
+                    uncheckedTrackColor = primaryTheme.color3,
+                    uncheckedBorderColor = primaryTheme.color2,
+                    uncheckedIconColor = primaryTheme.color3,
 
                     disabledCheckedThumbColor = primaryTheme.color2,
                     disabledCheckedTrackColor = primaryTheme.color2,
