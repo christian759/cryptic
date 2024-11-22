@@ -19,7 +19,6 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.ceo1.cryptic.Theme
 import com.ceo1.cryptic.extractImageFromImageAndroid
-import com.ceo1.cryptic.ui.theme.*
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
