@@ -89,8 +89,14 @@ fun extractImageFromImageAndroid(context: Context, embeddedImageUri: Uri?, outpu
     }
 }
 
-fun decodeTextFromImage(imagePath: String) {
-    val image = BitmapFactory.decodeFile(imagePath)
+
+fun decodeTextFromImage(context: Context, embeddedImageUri: Uri?) {
+    val inputStream = embeddedImageUri?.let { context.contentResolver.openInputStream(it) } ?: run {
+        println("Error: Could not read embedded image data.")
+        return
+    }
+
+    val image = BitmapFactory.decodeStream(inputStream)
     val bits = StringBuilder()
 
     outer@ for (y in 0 until image.height) {
@@ -113,30 +119,47 @@ fun decodeTextFromImage(imagePath: String) {
 }
 
 
-fun encodeTextInImage(imagePath: String, outputPath: String, text: String) {
-    val image = BitmapFactory.decodeFile(imagePath)
+fun encodeTextInImage(context: Context, coverImageUri: Uri?, text: String, outputPath: String) {
+    val coverImage = BitmapFactory.decodeStream(coverImageUri?.let { context.contentResolver.openInputStream(it) } ?: run {
+        println("Error: Could not read embedded image data.")
+        return
+    })
+
     val binaryText = text.toByteArray().joinToString("") { it.toString(2).padStart(8, '0') } + "00000000"  // Add a stop sequence
 
     var index = 0
-    outer@ for (y in 0 until image.height) {
-        for (x in 0 until image.width) {
+    outer@ for (y in 0 until coverImage.height) {
+        for (x in 0 until coverImage.width) {
             if (index >= binaryText.length) break@outer
 
-            val color = image.getPixel(x, y)
+            val color = coverImage.getPixel(x, y)
             val red = Color.red(color)
             val green = Color.green(color)
             val blue = Color.blue(color)
 
             val newBlue = (blue and 0xFE) or binaryText[index].digitToInt()  // Modify LSB of the blue channel
-            image.setPixel(x, y, Color.rgb(red, green, newBlue))
+            coverImage.setPixel(x, y, Color.rgb(red, green, newBlue))
 
             index++
         }
     }
 
-    val outputFile = File(outputPath)
-    FileOutputStream(outputFile).use { outputStream ->
-        image.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+    val resolver = context.contentResolver
+    val contentValues = ContentValues().apply {
+        put(MediaStore.MediaColumns.DISPLAY_NAME, outputPath)
+        put(MediaStore.MediaColumns.MIME_TYPE, "image/png")
+        put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
     }
-    println("Text encoded in image successfully.")
+    val uri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+
+    uri?.let {
+        resolver.openOutputStream(it).use { outputStream ->
+            outputStream?.let {
+                coverImage.compress(Bitmap.CompressFormat.PNG, 100, it)
+                it.close()
+            }
+        }
+        println("Text encoded in image successfully and saved to: $uri")
+    }
 }
+
