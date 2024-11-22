@@ -17,10 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.ceo1.cryptic.blocks.hide
 import com.ceo1.cryptic.blocks.extract
-import com.ceo1.cryptic.ui.theme.Dark1
-import com.ceo1.cryptic.ui.theme.Dark2
-import com.ceo1.cryptic.ui.theme.Light1
-import com.ceo1.cryptic.ui.theme.Light2
+import com.ceo1.cryptic.ui.theme.*
 
 class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
@@ -35,7 +32,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-data class Theme(val color1: Color, val color2: Color)
+data class Theme(val color1: Color, val color2: Color, val color3: Color)
 
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -46,13 +43,15 @@ fun Master() {
     var colorTheme by remember { mutableStateOf(false) }
 
     // light theme and dark theme
-    val Darkprimary = Theme(Dark1, Light2)
-    val LightTheme = Theme(Dark2, Light1)
+    val Darkprimary = Theme(Dark1, Dark2, Dark3)
+    val LightTheme = Theme(Light1, Light2, Light3)
 
     var primaryTheme by remember { mutableStateOf(LightTheme) }
 
     if (colorTheme) {
        primaryTheme = Darkprimary
+    }else{
+        primaryTheme = LightTheme
     }
 
     // Page number
@@ -99,16 +98,19 @@ fun Master() {
         Column(modifier = Modifier.weight(9f)) {
 
             Switch(checked = colorTheme,
-                onCheckedChange = {colorTheme = it},
+                onCheckedChange = {
+                    colorTheme = if(colorTheme){false}else{true}
+                },
                 colors = SwitchColors(
-                    checkedThumbColor = primaryTheme.color1,
+                    checkedThumbColor = primaryTheme.color2,
                     checkedTrackColor = primaryTheme.color1,
                     checkedBorderColor = primaryTheme.color2,
                     checkedIconColor = primaryTheme.color1,
-                    uncheckedThumbColor = primaryTheme.color2,
+                    uncheckedThumbColor = primaryTheme.color1,
                     uncheckedTrackColor = primaryTheme.color2,
                     uncheckedBorderColor = primaryTheme.color1,
                     uncheckedIconColor = primaryTheme.color2,
+
                     disabledCheckedThumbColor = primaryTheme.color2,
                     disabledCheckedTrackColor = primaryTheme.color2,
                     disabledCheckedBorderColor = primaryTheme.color2,
@@ -119,6 +121,7 @@ fun Master() {
                     disabledUncheckedIconColor = primaryTheme.color2
                 )
             )
+
             when (page) {
                 1 -> Welcome(primaryTheme)
                 2 -> extract(primaryTheme)
