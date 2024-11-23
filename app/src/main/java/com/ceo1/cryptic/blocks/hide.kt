@@ -41,19 +41,19 @@ fun hide(primaryTheme: Theme){
 
     Spacer(modifier = Modifier.padding(10.dp))
 
-    Text("Hide Image", color = White, fontSize = TextUnit(30f, TextUnitType.Sp), fontWeight = FontWeight.Bold,
+    Text("Hide Image", color = primaryTheme.color3, fontSize = TextUnit(30f, TextUnitType.Sp), fontWeight = FontWeight.Bold,
         modifier = Modifier.padding(10.dp))
 
+    Card(colors = CardColors(primaryTheme.color2, primaryTheme.color2, primaryTheme.color2, primaryTheme.color2),
+        modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp).height(115.dp)) {
+        // first card for cover image
+        Text("Select a cover image", color = primaryTheme.color3, fontSize = TextUnit(18f, TextUnitType.Sp),
+            modifier = Modifier.padding(10.dp))
 
-    // first card for cover image
-    Text("Select a cover image", color = White, fontSize = TextUnit(18f, TextUnitType.Sp),
-        modifier = Modifier.padding(10.dp))
-
-    Card(colors = CardColors(White2, White2, White2, White2),
-        modifier = Modifier.padding(horizontal = 10.dp).height(70.dp)) {
-
-        Row(modifier = Modifier.padding(3.dp)) {
-            Button(border = BorderStroke(1.dp, Color.White),
+        Row(modifier = Modifier.padding(5.dp)) {
+            Button(colors = ButtonColors(containerColor = primaryTheme.color3, contentColor = primaryTheme.color1, disabledContentColor = Color.Unspecified,
+                disabledContainerColor = Color.Unspecified),
+                border = BorderStroke(5.dp, primaryTheme.color1),
                 shape = RoundedCornerShape(12.dp),
                 modifier = Modifier
                     .weight(0.5f)
@@ -77,18 +77,22 @@ fun hide(primaryTheme: Theme){
         }
     }
 
-    Spacer(modifier = Modifier.padding(17.dp))
+    Spacer(modifier = Modifier.padding(15.dp))
 
 
     // second image card, image to hide
-    Text("Select an image to hide", color = White, fontSize = TextUnit(18f, TextUnitType.Sp),
-        modifier = Modifier.padding(10.dp))
 
-    Card(colors = CardColors(White2, White2, White2, White2),
-        modifier = Modifier.padding(horizontal = 10.dp).height(70.dp)) {
+    Card(colors = CardColors(primaryTheme.color2, primaryTheme.color2, primaryTheme.color2,
+        primaryTheme.color2),
+        modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp).height(115.dp)) {
+
+        Text("Select an image to hide", color = primaryTheme.color3, fontSize = TextUnit(18f, TextUnitType.Sp),
+            modifier = Modifier.padding(10.dp))
 
         Row(modifier = Modifier.padding(3.dp)) {
-            Button(border = BorderStroke(1.dp, Color.White),
+            Button(colors = ButtonColors(containerColor = primaryTheme.color3, contentColor = primaryTheme.color1, disabledContentColor = Color.Unspecified,
+                disabledContainerColor = Color.Unspecified),
+                border = BorderStroke(5.dp, primaryTheme.color1),
                 shape = RoundedCornerShape(12.dp),
                 modifier = Modifier
                     .weight(0.5f)

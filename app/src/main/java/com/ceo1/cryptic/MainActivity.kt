@@ -202,8 +202,8 @@ fun Master() {
         }
             when (page) {
                 1 -> Welcome(primaryTheme)
-                2 -> extract(primaryTheme)
-                3 -> hide(primaryTheme)
+                2 -> hide(primaryTheme)
+                3 -> extract(primaryTheme)
                 4 -> extractText(primaryTheme)
                 5 -> hideText(primaryTheme)
             }
