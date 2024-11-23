@@ -9,6 +9,8 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -20,6 +22,8 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import com.ceo1.cryptic.blocks.hide
 import com.ceo1.cryptic.blocks.extract
+import com.ceo1.cryptic.blocks.extractText
+import com.ceo1.cryptic.blocks.hideText
 import com.ceo1.cryptic.ui.theme.*
 
 class MainActivity : ComponentActivity() {
@@ -69,12 +73,12 @@ fun Master() {
                 fontWeight = FontWeight.Bold,
                 color = primaryTheme.color3,
                 modifier = Modifier.align(Alignment.CenterHorizontally)
-                    .padding(10.dp)
+                    .padding(12.dp)
             )
 
             Card(
-                border = BorderStroke(width = 4.dp, color = primaryTheme.color2),
-                modifier = Modifier.fillMaxWidth().padding(10.dp).height(80.dp),
+                border = BorderStroke(width = 5.dp, color = primaryTheme.color2),
+                modifier = Modifier.fillMaxWidth().padding(12.dp).height(90.dp),
                 colors = CardColors(
                     containerColor = primaryTheme.color3,
                     contentColor = primaryTheme.color2,
@@ -82,7 +86,7 @@ fun Master() {
                     disabledContainerColor = Color.Unspecified,
                     disabledContentColor = Color.Unspecified),
                 onClick = {
-                page += 1
+                page = 2
             }) {
                 Text("Hide Images",
                     fontSize = TextUnit(4F, TextUnitType.Em),
@@ -93,8 +97,8 @@ fun Master() {
             }
 
             Card(
-                border = BorderStroke(width = 4.dp, color = primaryTheme.color2),
-                modifier = Modifier.fillMaxWidth().padding(10.dp).height(80.dp),
+                border = BorderStroke(width = 5.dp, color = primaryTheme.color2),
+                modifier = Modifier.fillMaxWidth().padding(12.dp).height(90.dp),
                 colors = CardColors(
                     containerColor = primaryTheme.color3,
                     contentColor = primaryTheme.color2,
@@ -102,7 +106,7 @@ fun Master() {
                     disabledContainerColor = Color.Unspecified,
                     disabledContentColor = Color.Unspecified),
                 onClick = {
-                page += 2
+                page = 3
             }) {
                 Text("Extract Image", fontSize = TextUnit(4F, TextUnitType.Em), fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(7.dp))
@@ -110,6 +114,43 @@ fun Master() {
                     modifier = Modifier.padding(7.dp))
             }
 
+            Card(
+                border = BorderStroke(width = 5.dp, color = primaryTheme.color2),
+                modifier = Modifier.fillMaxWidth().padding(12.dp).height(90.dp),
+                colors = CardColors(
+                    containerColor = primaryTheme.color3,
+                    contentColor = primaryTheme.color2,
+
+                    disabledContainerColor = Color.Unspecified,
+                    disabledContentColor = Color.Unspecified),
+                onClick = {
+                    page =4
+                }) {
+                Text("Extract Text", fontSize = TextUnit(4F, TextUnitType.Em), fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(7.dp))
+                Text("Unveil secret text that are hidden", fontSize = TextUnit(3F, TextUnitType.Em),
+                    modifier = Modifier.padding(7.dp))
+            }
+
+            Card(
+                border = BorderStroke(width = 5.dp, color = primaryTheme.color2),
+                modifier = Modifier.fillMaxWidth().padding(12.dp).height(90.dp),
+                colors = CardColors(
+                    containerColor = primaryTheme.color3,
+                    contentColor = primaryTheme.color2,
+
+                    disabledContainerColor = Color.Unspecified,
+                    disabledContentColor = Color.Unspecified),
+                onClick = {
+                    page = 5
+                }) {
+                Text("Hide Text",
+                    fontSize = TextUnit(4F, TextUnitType.Em),
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(7.dp))
+                Text("Hide secret text within other image", fontSize = TextUnit(3F, TextUnitType.Em),
+                    modifier = Modifier.padding(7.dp))
+            }
         }
     }
 
@@ -119,10 +160,24 @@ fun Master() {
 
         Column {
 
-            Switch(modifier = Modifier.align(Alignment.End),
+            Row(horizontalArrangement = Arrangement.SpaceBetween) {
+
+            if (page != 1){
+                IconButton(onClick = {
+                    page = 1
+                }) {
+                    val painter = Icons.Default.ArrowBack
+                    Icon(imageVector = painter, contentDescription = "")
+                }
+            }
+                Switch(modifier = Modifier.align(Alignment.Top),
                 checked = colorTheme,
                 onCheckedChange = {
-                    colorTheme = if(colorTheme){false}else{true}
+                    colorTheme = if (colorTheme) {
+                        false
+                    } else {
+                        true
+                    }
                 },
                 colors = SwitchColors(
                     checkedThumbColor = primaryTheme.color2,
@@ -144,11 +199,13 @@ fun Master() {
                     disabledUncheckedIconColor = primaryTheme.color2
                 )
             )
-
+        }
             when (page) {
                 1 -> Welcome(primaryTheme)
                 2 -> extract(primaryTheme)
                 3 -> hide(primaryTheme)
+                4 -> extractText(primaryTheme)
+                5 -> hideText(primaryTheme)
             }
         }
 
