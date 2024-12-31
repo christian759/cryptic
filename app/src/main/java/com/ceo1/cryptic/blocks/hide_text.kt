@@ -1,24 +1,28 @@
 package com.ceo1.cryptic.blocks
 
 // imports
-import androidx.compose.runtime.Composable
-import com.ceo1.cryptic.Theme
+import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.*
-import coil.compose.rememberAsyncImagePainter
-import coil.request.*
-import com.ceo1.cryptic.*
+import androidx.compose.runtime.Composable
+import com.ceo1.cryptic.Theme
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import com.ceo1.cryptic.ui.theme.*
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun hideText(primaryTheme: Theme){
+    var text_to_hide by remember { mutableStateOf("") }
+
     val context = LocalContext.current
 
     // cover image info
@@ -43,7 +47,8 @@ fun hideText(primaryTheme: Theme){
         Spacer(modifier = Modifier.padding(10.dp))
         Text("Hide Text")
         // text to hide
-        TextField()
+        TextField("Enter Text to hide",
+            {text_to_hide = it})
     }
 
 }

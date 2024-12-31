@@ -20,7 +20,6 @@ import androidx.compose.ui.unit.*
 import coil.compose.rememberAsyncImagePainter
 import coil.request.*
 import com.ceo1.cryptic.*
-import com.ceo1.cryptic.ui.theme.*
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -72,7 +71,7 @@ fun hide(primaryTheme: Theme){
                     .weight(0.3f))
             }}}
 
-    Spacer(modifier = Modifier.padding(15.dp)
+    Spacer(modifier = Modifier.padding(15.dp))
 
     // second image card, image to hide
     Card(colors = CardColors(primaryTheme.color2, primaryTheme.color2, primaryTheme.color2,
