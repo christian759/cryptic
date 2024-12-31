@@ -1,6 +1,6 @@
 package com.ceo1.cryptic.blocks
 
-
+// imports
 import android.net.Uri
 import android.os.Build
 import android.widget.Toast
@@ -62,26 +62,19 @@ fun hide(primaryTheme: Theme){
                 onClick = {
                     launcher.launch("image/*")
                 }
-            ) {
-                Text("Pick an image", fontSize = TextUnit(18f, TextUnitType.Sp))
-            }
+            ) { Text("Pick an image", fontSize = TextUnit(18f, TextUnitType.Sp))}
 
             Spacer(modifier = Modifier.padding(2.dp).weight(0.1f))
-
             imageUri?.let {
                     uri -> val painter = rememberAsyncImagePainter( model = ImageRequest.Builder(context).data(uri).build())
                 Image( painter = painter, contentDescription = "Selected Image", modifier = Modifier
                     .fillMaxHeight()
                     .weight(0.3f))
-            }
-        }
-    }
+            }}}
 
-    Spacer(modifier = Modifier.padding(15.dp))
-
+    Spacer(modifier = Modifier.padding(15.dp)
 
     // second image card, image to hide
-
     Card(colors = CardColors(primaryTheme.color2, primaryTheme.color2, primaryTheme.color2,
         primaryTheme.color2),
         modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp).height(115.dp)) {
@@ -100,11 +93,8 @@ fun hide(primaryTheme: Theme){
                     .fillMaxHeight(),
                 onClick = {
                     println("done")
-                    launcher2.launch("image/*")
-                }
-            ) {
-                Text("Pick an image", fontSize = TextUnit(18f, TextUnitType.Sp))
-            }
+                    launcher2.launch("image/*") }
+            ) { Text("Pick an image", fontSize = TextUnit(18f, TextUnitType.Sp))}
 
             Spacer(modifier = Modifier.padding(2.dp).weight(0.1f))
 
@@ -119,10 +109,7 @@ fun hide(primaryTheme: Theme){
                 Image( painter = painter2, contentDescription = "Selected Image", modifier = Modifier
                     .fillMaxHeight()
                     .weight(0.3f))
-            }
-        }
-    }
-
+            }}}
 
     // button for hiding
     Button(border = BorderStroke(1.dp, Color.White),
