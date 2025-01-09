@@ -76,61 +76,8 @@ fun Master() {
                     .padding(12.dp)
             )
 
-            Card(
-                border = BorderStroke(width = 5.dp, color = primaryTheme.color2),
-                modifier = Modifier.fillMaxWidth().padding(12.dp).height(90.dp),
-                colors = CardColors(
-                    containerColor = primaryTheme.color3,
-                    contentColor = primaryTheme.color2,
-
-                    disabledContainerColor = Color.Unspecified,
-                    disabledContentColor = Color.Unspecified),
-                onClick = {
-                page = 2
-            }) {
-                Text("Hide Images",
-                    fontSize = TextUnit(4F, TextUnitType.Em),
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(7.dp))
-                Text("Hide secret images within other image", fontSize = TextUnit(3F, TextUnitType.Em),
-                    modifier = Modifier.padding(7.dp))
-            }
-
-            Card(
-                border = BorderStroke(width = 5.dp, color = primaryTheme.color2),
-                modifier = Modifier.fillMaxWidth().padding(12.dp).height(90.dp),
-                colors = CardColors(
-                    containerColor = primaryTheme.color3,
-                    contentColor = primaryTheme.color2,
-
-                    disabledContainerColor = Color.Unspecified,
-                    disabledContentColor = Color.Unspecified),
-                onClick = {
-                page = 3
-            }) {
-                Text("Extract Image", fontSize = TextUnit(4F, TextUnitType.Em), fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(7.dp))
-                Text("Unveil secret images that are hidden", fontSize = TextUnit(3F, TextUnitType.Em),
-                    modifier = Modifier.padding(7.dp))
-            }
-
-            Card(
-                border = BorderStroke(width = 5.dp, color = primaryTheme.color2),
-                modifier = Modifier.fillMaxWidth().padding(12.dp).height(90.dp),
-                colors = CardColors(
-                    containerColor = primaryTheme.color3,
-                    contentColor = primaryTheme.color2,
-
-                    disabledContainerColor = Color.Unspecified,
-                    disabledContentColor = Color.Unspecified),
-                onClick = {
-                    page =4
-                }) {
-                Text("Extract Text", fontSize = TextUnit(4F, TextUnitType.Em), fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(7.dp))
-                Text("Unveil secret text that are hidden", fontSize = TextUnit(3F, TextUnitType.Em),
-                    modifier = Modifier.padding(7.dp))
-            }
+        }
+    }
 
             Card(
                 border = BorderStroke(width = 5.dp, color = primaryTheme.color2),
