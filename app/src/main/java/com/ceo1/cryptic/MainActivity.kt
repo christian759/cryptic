@@ -79,27 +79,8 @@ fun Master() {
         }
     }
 
-            Card(
-                border = BorderStroke(width = 5.dp, color = primaryTheme.color2),
-                modifier = Modifier.fillMaxWidth().padding(12.dp).height(90.dp),
-                colors = CardColors(
-                    containerColor = primaryTheme.color3,
-                    contentColor = primaryTheme.color2,
-
-                    disabledContainerColor = Color.Unspecified,
-                    disabledContentColor = Color.Unspecified),
-                onClick = {
-                    page = 5
-                }) {
-                Text("Hide Text",
-                    fontSize = TextUnit(4F, TextUnitType.Em),
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(7.dp))
-                Text("Hide secret text within other image", fontSize = TextUnit(3F, TextUnitType.Em),
-                    modifier = Modifier.padding(7.dp))
-            }
-        }
-    }
+    Welcome(colorTheme)
+}
 
 
 
