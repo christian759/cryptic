@@ -102,25 +102,6 @@ fun Master() {
     }
 
 
-                    disabledCheckedThumbColor = primaryTheme.color2,
-                    disabledCheckedTrackColor = primaryTheme.color2,
-                    disabledCheckedBorderColor = primaryTheme.color2,
-                    disabledCheckedIconColor = primaryTheme.color2,
-                    disabledUncheckedThumbColor = primaryTheme.color2,
-                    disabledUncheckedTrackColor = primaryTheme.color2,
-                    disabledUncheckedBorderColor = primaryTheme.color2,
-                    disabledUncheckedIconColor = primaryTheme.color2
-                )
-            )
-        }
-            when (page) {
-                1 -> Welcome(primaryTheme)
-                2 -> hide(primaryTheme)
-                3 -> extract(primaryTheme)
-                4 -> extractText(primaryTheme)
-                5 -> hideText(primaryTheme)
-            }
-        }
 
     }
 }
