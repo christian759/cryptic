@@ -9,6 +9,8 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
@@ -20,10 +22,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
-import com.ceo1.cryptic.blocks.hide
-import com.ceo1.cryptic.blocks.extract
-import com.ceo1.cryptic.blocks.extractText
-import com.ceo1.cryptic.blocks.hideText
 import com.ceo1.cryptic.ui.theme.*
 
 class MainActivity : ComponentActivity() {
@@ -44,21 +42,8 @@ data class Theme(val color1: Color, val color2: Color, val color3: Color)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun Master() {
-
-    // color theme can only be one or two indicating light and dark theme
-    var colorTheme by remember { mutableStateOf(false) }
-
-    // light theme and dark theme
-    val Darkprimary = Theme(Dark1, Dark2, Dark3)
-    val LightTheme = Theme(Light1, Light2, Light3)
-
-    var primaryTheme by remember { mutableStateOf(LightTheme) }
-
-    if (colorTheme) {
-       primaryTheme = Darkprimary
-    }else{
-        primaryTheme = LightTheme
-    }
+    // theme
+    val colorTheme = Theme(darkPurple, mediumPurple, lightPurple)
 
     // Page number
     var page by remember { mutableStateOf(1) }
@@ -76,6 +61,34 @@ fun Master() {
                     .padding(12.dp)
             )
 
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                modifier = Modifier.fillMaxSize()
+            ){
+                item{
+                    Button(onClick = {}) {
+                        Text("Hide Text")
+                    }
+                }
+
+                item{
+                    Button(onClick = {}) {
+                        Text("Hide Image")
+                    }
+                }
+
+                item{
+                    Button(onClick = {}) {
+                        Text("Extract Text")
+                    }
+                }
+
+                item{
+                    Button(onClick = {}) {
+                        Text("Extract Image")
+                    }
+                }
+            }
         }
     }
 
@@ -84,5 +97,3 @@ fun Master() {
 
 
 
-    }
-}
