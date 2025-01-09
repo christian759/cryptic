@@ -101,40 +101,6 @@ fun Master() {
         }
     }
 
-    Column(modifier = Modifier.background(color = primaryTheme.color1)
-                            .fillMaxSize()) {
-        Spacer(modifier = Modifier.padding(15.dp))
-
-        Column {
-
-            Row(horizontalArrangement = Arrangement.SpaceBetween) {
-
-            if (page != 1){
-                IconButton(onClick = {
-                    page = 1
-                }) {
-                    val painter = Icons.Default.ArrowBack
-                    Icon(imageVector = painter, contentDescription = "")
-                }
-            }
-                Switch(modifier = Modifier.align(Alignment.Top),
-                checked = colorTheme,
-                onCheckedChange = {
-                    colorTheme = if (colorTheme) {
-                        false
-                    } else {
-                        true
-                    }
-                },
-                colors = SwitchColors(
-                    checkedThumbColor = primaryTheme.color2,
-                    checkedTrackColor = primaryTheme.color3,
-                    checkedBorderColor = primaryTheme.color2,
-                    checkedIconColor = primaryTheme.color3,
-                    uncheckedThumbColor = primaryTheme.color2,
-                    uncheckedTrackColor = primaryTheme.color3,
-                    uncheckedBorderColor = primaryTheme.color2,
-                    uncheckedIconColor = primaryTheme.color3,
 
                     disabledCheckedThumbColor = primaryTheme.color2,
                     disabledCheckedTrackColor = primaryTheme.color2,
